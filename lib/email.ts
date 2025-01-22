@@ -1,12 +1,24 @@
-import sgMail from "@sendgrid/mail"
+// import sgMail from '@sendgrid/mail';
+import nodemailer from 'nodemailer';
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY as string)
+
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
 
 export async function sendWelcomeEmail(to: string, firstName: string) {
+      const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+        // port: parseInt(process.env.SMTP_PORT, 10),
+        port:465,
+      secure: true, // true for 465, false for other ports
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    });
   const msg = {
     to,
-    from: "noreply@scinter.org", // Replace this with your verified sender email
-    subject: "Welcome to ScInter – Revolutionizing Scientific Discoveries",
+    from: 'support@scinter.org', // Replace this with your verified sender email
+    subject: 'Welcome to ScInter – Revolutionizing Scientific Discoveries',
     html: `
       <h1>Hello ${firstName},</h1>
       <p>Thank you for signing up to be a part of ScInter, a platform dedicated to revolutionizing the 
@@ -33,14 +45,15 @@ export async function sendWelcomeEmail(to: string, firstName: string) {
       <p>Sincerely,<br>The ScInter Team</p>
       <p><a href="https://www.scinter.org">Visit our website</a></p>
     `,
-  }
+  };
 
   try {
-    await sgMail.send(msg)
-    console.log("Email sent successfully")
+    const info = await transporter.sendMail(msg);
+    console.log('Email sent:', info.messageId);
+    return { success: true };
   } catch (error) {
-    console.error("Error sending email:", error)
-    throw error
+    console.error('Error sending email:', error);
+    throw error;
   }
 }
 
