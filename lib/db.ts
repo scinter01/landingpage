@@ -13,5 +13,5 @@ if (!pool) {
     ssl: { rejectUnauthorized: false },
   });
 }
-
+// console.log(pool)
 export default pool;

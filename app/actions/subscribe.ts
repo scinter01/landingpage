@@ -59,6 +59,7 @@ export async function subscribeUser(formData: FormData) {
       await client.query('COMMIT');
       
       // Send welcome email
+      console.log(name,email)
       const firstName = name.split(' ')[0];
       await sendWelcomeEmail(email, firstName);
 

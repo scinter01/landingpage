@@ -4,10 +4,11 @@ import { useState } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useToast } from "@/components/ui/use-toast"
-import { subscribeUser } from '@/app/actions/subscribe'
-import { motion } from 'framer-motion'
 import { MultiSelect } from "@/components/ui/multi-select"
+import { subscribeUser } from '@/app/actions/subscribe'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Brain, Globe, Users, CheckCircle } from 'lucide-react'
 
 const INTEREST_FIELDS = [
@@ -53,7 +54,7 @@ export function SubscribeModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    
+
     const formData = new FormData()
     formData.append('name', name)
     formData.append('email', email)
@@ -64,7 +65,7 @@ export function SubscribeModal({
 
     try {
       const result = await subscribeUser(formData)
-      
+
       if (result.success) {
         setShowForm(false)
         // Reset form fields
@@ -99,14 +100,6 @@ export function SubscribeModal({
     setInterests([])
     setStemSubjects([])
     setIsLoading(false)
-  }
-
-  const handleSubscribeAgain = () => {
-    setShowForm(true)
-    setName('')
-    setEmail('')
-    setInterests([])
-    setStemSubjects([])
   }
 
   return (
@@ -163,13 +156,13 @@ export function SubscribeModal({
                   />
                 )}
                 <div className="flex justify-center w-full">
-                <Button 
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full max-w-xs bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105"
-                >
-                  {isLoading ? "Subscribing..." : "Subscribe"}
-                </Button>
+                  <Button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full max-w-xs bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105"
+                  >
+                    {isLoading ? "Subscribing..." : "Subscribe"}
+                  </Button>
                 </div>
               </form>
               <div className="mt-6 grid grid-cols-3 gap-4">
@@ -247,4 +240,3 @@ const ThankYouMessage: React.FC<{ onClose: () => void, onSubscribeAgain: () => v
     </motion.div>
   )
 }
-
