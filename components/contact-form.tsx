@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useToast } from "@/components/ui/use-toast"
+import { submitContactForm } from '@/app/actions/subscribe'
 
 export function ContactForm() {
   const [topic, setTopic] = useState('')
@@ -20,20 +21,41 @@ export function ContactForm() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Here you would typically send the form data to your backend
-    // For now, we'll just simulate a submission
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    const formData = new FormData()
+    formData.append('name', name)
+    formData.append('email', email)
+    formData.append('topic', topic)
+    formData.append('message', message)
 
-    toast({
-      title: "Message Sent",
-      description: "We've received your message and will get back to you soon.",
-    })
+    try {
+      const result = await submitContactForm(formData)
 
-    setTopic('')
-    setName('')
-    setEmail('')
-    setMessage('')
-    setIsSubmitting(false)
+      if (result.success) {
+        toast({
+          title: "Message Sent",
+          description: "We've received your message and will get back to you soon.",
+        })
+
+        setTopic('')
+        setName('')
+        setEmail('')
+        setMessage('')
+      } else {
+        toast({
+          title: "Error",
+          description: result.error || "Something went wrong. Please try again.",
+          variant: "destructive",
+        })
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -102,4 +124,3 @@ export function ContactForm() {
     </>
   )
 }
-

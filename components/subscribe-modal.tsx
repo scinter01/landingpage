@@ -7,8 +7,8 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useToast } from "@/components/ui/use-toast"
 import { subscribeUser } from '@/app/actions/subscribe'
-import { ThankYouMessage } from './ThankYouMessage'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import { CheckCircle, X } from 'lucide-react'
 
 const STEM_FIELDS = [
   "Physics",
@@ -42,7 +42,6 @@ export function SubscribeModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    console.log("Submitting form with data:", { name, email, interest, customInterest });
 
     const formData = new FormData()
     formData.append('name', name)
@@ -50,15 +49,15 @@ export function SubscribeModal({
     formData.append('interest', interest === 'other' ? customInterest : interest)
 
     try {
-      console.log("Calling subscribeUser...");
       const result = await subscribeUser(formData)
-      console.log("subscribeUser result:", result);
 
       if (result.success) {
-        console.log("Data successfully stored in the database.");
         setShowThankYou(true)
+        setTimeout(() => {
+          setShowThankYou(false)
+          handleClose()
+        }, 5000)
       } else {
-        console.error("Error storing data in the database:", result.error);
         toast({
           title: "Error",
           description: result.error || "Something went wrong. Please try again.",
@@ -66,7 +65,6 @@ export function SubscribeModal({
         })
       }
     } catch (error) {
-      console.error("Error in subscribeUser:", error);
       toast({
         title: "Error",
         description: "An unexpected error occurred. Please try again.",
@@ -79,7 +77,6 @@ export function SubscribeModal({
 
   const handleClose = () => {
     setIsOpen(false)
-    setShowThankYou(false)
     setName('')
     setEmail('')
     setInterest('')
@@ -88,23 +85,24 @@ export function SubscribeModal({
 
   return (
     <>
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-md bg-gradient-to-br from-purple-900/80 to-blue-900/80 backdrop-blur-xl border border-white/10">
+      <Dialog open={isOpen && !showThankYou} onOpenChange={setIsOpen}>
+        <DialogContent className="sm:max-w-md bg-gradient-to-br from-purple-900/80 to-blue-900/80 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-white mb-2">
-              Subscribe for Updates from ScInter
+            <DialogTitle className="text-3xl font-bold text-white mb-4 text-center">
+              Stay Connected with ScInter
             </DialogTitle>
-            <DialogDescription className="text-gray-300">
-              Stay informed about the latest developments, research insights, and features of our platform dedicated to advancement of STEM.
+            <DialogDescription className="text-gray-300 text-center">
+              Subscribe for updates and join the revolution in STEM collaboration and discovery.
             </DialogDescription>
           </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-6 mt-6">
             <Input
               placeholder="Full Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="bg-white/10 border-white/20 text-white placeholder-gray-400"
+              autoComplete="name"
+              className="bg-white/10 border-white/20 text-white placeholder-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <Input
               type="email"
@@ -112,13 +110,14 @@ export function SubscribeModal({
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="bg-white/10 border-white/20 text-white placeholder-gray-400"
+              autoComplete="email"
+              className="bg-white/10 border-white/20 text-white placeholder-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <Select value={interest} onValueChange={setInterest}>
-              <SelectTrigger className="bg-white/10 border-white/20 text-white">
+              <SelectTrigger className="bg-white/10 border-white/20 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <SelectValue placeholder="Area of Interest" />
               </SelectTrigger>
-              <SelectContent className="bg-gray-800 border-gray-700 text-white">
+              <SelectContent className="bg-gray-800 border-gray-700 text-white rounded-lg shadow-md">
                 {STEM_FIELDS.map((field) => (
                   <SelectItem key={field} value={field.toLowerCase()}>
                     {field}
@@ -131,13 +130,13 @@ export function SubscribeModal({
                 placeholder="Specify your area of interest"
                 value={customInterest}
                 onChange={(e) => setCustomInterest(e.target.value)}
-                className="mt-2 bg-white/10 border-white/20 text-white placeholder-gray-400"
+                className="mt-2 bg-white/10 border-white/20 text-white placeholder-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             )}
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+              className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-3 rounded-lg transition-all duration-300 transform hover:scale-105"
             >
               {isLoading ? "Subscribing..." : "Subscribe"}
             </Button>
@@ -145,7 +144,34 @@ export function SubscribeModal({
         </DialogContent>
       </Dialog>
       <AnimatePresence>
-        {showThankYou && <ThankYouMessage onClose={handleClose} />}
+        {showThankYou && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            className="fixed inset-0 flex items-center justify-center z-50 bg-black/50"
+          >
+            <div className="relative sm:max-w-md bg-gradient-to-br from-purple-900/80 to-blue-900/80 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1, rotate: 360 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20 }}
+              >
+                <CheckCircle className="w-16 h-16 mx-auto text-green-400 mb-4" />
+              </motion.div>
+              <h2 className="text-3xl font-bold text-white mb-4">Thank You for Joining ScInter!</h2>
+              <p className="text-gray-300 mb-6">
+                You're now part of the revolution to make science more collaborative and accessible. Stay tuned for updates and your early access invite! Together, we're shaping the future of discovery.
+              </p>
+              <button
+                onClick={() => setShowThankYou(false)}
+                className="absolute top-2 right-2 text-white hover:text-red-500"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+          </motion.div>
+        )}
       </AnimatePresence>
     </>
   )

@@ -35,9 +35,7 @@ export async function sendWelcomeEmail(to: string, firstName: string) {
         <li><strong>Engage and Collaborate:</strong> Your insights and feedback will play a vital role in shaping 
         ScInter into a robust and dynamic space for collaboration.</li>
       </ul>
-      <p>We invite you to follow us on our social channels for updates, announcements, and 
-      opportunities to engage:</p>
-      <p>[Insert links to LinkedIn, Twitter, etc.]</p>
+      
       <p>If you have any questions or ideas, please feel free to reach out at support@scinter.org. We're 
       excited to embark on this journey with you and look forward to making a meaningful impact 
       together.</p>
@@ -57,3 +55,6 @@ export async function sendWelcomeEmail(to: string, firstName: string) {
   }
 }
 
+// <p>We invite you to follow us on our social channels for updates, announcements, and 
+//       opportunities to engage:</p>
+//       <p>[Insert links to LinkedIn, Twitter, etc.]</p>
