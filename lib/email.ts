@@ -103,19 +103,14 @@ export async function sendWelcomeEmail(to: string, firstName: string) {
           <p>Thank you for signing up to be a part of ScInter, a platform dedicated to revolutionizing the 
           way science is shared, explored, and developed.</p>
           <p>At ScInter, we connect researchers, academic institutions, industries, and science enthusiasts 
-          through a collaborative ecosystem powered by Large Concept Models and Knowledge 
-          Graphs. Together, we aim to make scientific innovation more accessible and impactful.</p>
+          through a collaborative ecosystem powered by Interactive AI. Together, we aim to make scientific innovation more accessible and impactful.</p>
           <h2>What's Next?</h2>
           <ul>
-            <li><strong>Stay Informed:</strong> We will keep you updated with the latest developments and 
-            milestones as we move forward.</li>
-            <li><strong>Early Access Opportunities:</strong> As part of our early community, you will gain 
-            exclusive access to the platform and its features before the public launch.</li>
-            <li><strong>Engage and Collaborate:</strong> Your insights and feedback will play a vital role in shaping 
-            ScInter into a robust and dynamic space for collaboration.</li>
+            <li><strong>Stay Updated:</strong> We'll keep you in the loop with key updates and milestones as we progress.</li>
+            <li><strong>Exclusive Early Access:</strong> As a member of our early community, you’ll be among the first to experience the platform and its features before the official launch.</li>
+            <li><strong>Collaborate & Share:</strong> Your feedback and insights will help shape ScInter into a thriving hub for collaboration and innovation.</li>
           </ul>
-          
-          <p>If you have any questions or ideas, please feel free to reach out at support@scinter.org. We're 
+          <p>If you have any questions, suggestions, or ideas, don't hesitate to reach out at support@scinter.org. We're 
           excited to embark on this journey with you and look forward to making a meaningful impact 
           together.</p>
           <p>Thank you for joining us as we redefine the future of science.</p>
@@ -151,4 +146,3 @@ export async function sendWelcomeEmail(to: string, firstName: string) {
     throw error
   }
 }
-
