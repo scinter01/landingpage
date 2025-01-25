@@ -16,10 +16,12 @@ export function Footer() {
             <ContactForm />
           </div>
           <div className="flex justify-center space-x-8">
-            <SocialIcon href="#" icon={Facebook} label="Facebook" />
-            <SocialIcon href="#" icon={Twitter} label="Twitter" />
-            <SocialIcon href="#" icon={Linkedin} label="LinkedIn" />
-            <SocialIcon href="#" icon={Github} label="GitHub" />
+            <SocialIcon href="https://x.com/ScInter" icon={Twitter} label="X (formerly Twitter)" />
+            <SocialIcon href="https://www.linkedin.com/company/scinter" icon={Linkedin} label="LinkedIn" />
+            <SocialIcon href="https://www.facebook.com/profile.php?id=61572442919491" icon={Facebook} label="Facebook" />
+            <SocialIcon href="https://www.instagram.com/scinterofficial/?hl=en" icon={Instagram} label="Instagram" />
+            <SocialIcon href="https://github.com/ScInter" icon={Github} label="GitHub" />
+            <SocialIcon href="https://github.com/ScInter" icon={youtube} label="Youtube" />
           </div>
         </div>
       </div>
