@@ -21,7 +21,7 @@ export function Footer() {
           </div>
           <div className="flex justify-center space-x-8">
             <SocialIcon href="https://www.facebook.com/profile.php?id=61572442919491" icon={Facebook} label="Facebook" />
-            <SocialIcon href="#" icon={X} label="X" />
+            <SocialIcon href="https://x.com/ScInter23971369" icon={X} label="X" />
             <SocialIcon href="https://www.linkedin.com/company/105594908/admin/dashboard/" icon={Linkedin} label="LinkedIn" />
             <SocialIcon href="https://github.com/Scinteradmin" icon={Github} label="GitHub" />
             <SocialIcon href="https://www.instagram.com/scinterofficial/?hl=en" icon={Instagram} label="Instagram" />
