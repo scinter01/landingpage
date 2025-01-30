@@ -120,7 +120,7 @@ export default function Home() {
                 <p className="text-lg text-gray-200 leading-relaxed">
                   ScInter is an advanced platform dedicated to fostering global scientific collaboration and
                   accelerating innovation. Utilizing state-of-the-art AI-driven Knowledge Graphs, Large Concept Models,
-                  and Graph Neural Networks, ScInter redefines how research is accessed, analyzed, and connected.
+                  and Graph Neural Networks,ScInter refines the way science is accessed, systematically analyzed, and accurately interpreted.
                 </p>
               </div>
 
